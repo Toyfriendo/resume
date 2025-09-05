@@ -1,439 +1,442 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<!doctype html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Md Arham — Software Developer</title>
-  <meta name="theme-color" content="#0b1220" />
-
-  <!-- Tailwind CSS & Chart.js from CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <!-- Google Fonts: Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Md Arham — Interactive Resume</title>
+  <meta name="description" content="Interactive resume of Md Arham — Software & Web Developer with AI/LLM interest." />
+  <meta name="color-scheme" content="light dark" />
   <style>
-    /* Base variables and font settings */
-    :root { 
-      --bg: #0b1220; 
-      --card: rgba(255,255,255,0.06); 
-      --ring: #60a5fa; 
-      --muted: #94a3b8; 
+    :root{
+      --bg: #0b0c10;
+      --card: #111318;
+      --text: #e7e9ee;
+      --muted: #a6adbb;
+      --accent: #6ee7b7; /* mint */
+      --accent-2: #60a5fa; /* blue */
+      --ring: rgba(110,231,183,.45);
+      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --radius: 16px;
+      --maxw: 1080px;
     }
-    html { 
-      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; 
-    }
-    /* Dark mode variables */
-    .dark {
-      --bg: #0b1220;
-      --card: rgba(255,255,255,0.06);
-    }
-    html:not(.dark) {
-      --bg: #f8fafc;
-      --card: rgba(255,255,255,0.8);
-    }
-    
-    /* Futuristic background grid effect */
-    .bg-grid {
-      background: 
-        radial-gradient(1200px 600px at 80% -10%, rgba(56,189,248,.20), transparent 60%),
-        radial-gradient(1200px 600px at 20% 110%, rgba(167,139,250,.18), transparent 60%),
-        linear-gradient(transparent 0 0),
-        repeating-linear-gradient(0deg, rgba(148,163,184,.15) 0 1px, transparent 1px 48px),
-        repeating-linear-gradient(90deg, rgba(148,163,184,.12) 0 1px, transparent 1px 48px);
-      background-color: var(--bg);
-      background-attachment: fixed;
+    [data-theme="light"]{
+      --bg: #f7fafc;
+      --card:#ffffff;
+      --text:#0b1220;
+      --muted:#5b6471;
+      --accent:#0ea5e9; /* cyan */
+      --accent-2:#10b981; /* green */
+      --ring: rgba(14,165,233,.35);
+      --shadow: 0 10px 30px rgba(2,8,23,.08);
     }
 
-    /* Glassmorphism card effect */
-    .glass {
-      background: var(--card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(148,163,184,0.18);
-      box-shadow: 0 10px 30px rgba(2,8,23,.35);
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(96,165,250,.12), transparent 60%),
+                  radial-gradient(900px 600px at -10% 30%, rgba(110,231,183,.10), transparent 60%),
+                  var(--bg);
+      line-height:1.6;
+      letter-spacing:.2px;
     }
-    html:not(.dark) .glass {
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(100%, var(--maxw)); margin-inline:auto; padding-inline: clamp(16px, 3vw, 28px)}
 
-    /* Custom focus ring for accessibility */
-    .focus-ring:focus-visible { 
-      outline: none; 
-      box-shadow: 0 0 0 3px var(--ring), 0 0 0 6px rgba(96,165,250,.35); 
+    /* Header */
+    header.site{
+      position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
+      background: color-mix(in lab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid color-mix(in lab, var(--muted), transparent 70%);
     }
+    .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
+    .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001b1b;box-shadow:var(--shadow)}
+    .nav a.link{padding:8px 12px;border-radius:10px;opacity:.9}
+    .nav a.link[aria-current="page"], .nav a.link:hover{background:color-mix(in oklab, var(--card) 60%, transparent 40%); outline:1px solid color-mix(in lab, var(--muted), transparent 65%)}
+    .nav .actions{display:flex;gap:8px;align-items:center}
+    .btn{display:inline-flex; gap:8px; align-items:center; border:1px solid color-mix(in lab, var(--muted), transparent 65%); background:var(--card); color:var(--text); padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); cursor:pointer}
+    .btn.secondary{background:transparent}
+    .btn:focus-visible{outline:2px solid var(--ring)}
 
-    /* Gradient text effect */
-    .gradient-text { 
-      background: linear-gradient(90deg,#93c5fd,#a78bfa,#34d399); 
-      -webkit-background-clip: text; 
-      background-clip: text; 
-      color: transparent; 
-    }
+    /* Sections */
+    section{scroll-margin-top:84px}
+    .grid{display:grid; gap:16px}
+    .hero{display:grid; gap:18px; padding-block:28px}
+    .hero h1{font-weight:900; letter-spacing:.4px; line-height:1.1; font-size: clamp(28px, 5.2vw, 56px); margin:0}
+    .hero .subtitle{font-size: clamp(14px, 2.6vw, 18px); color:var(--muted)}
+    .chips{display:flex; flex-wrap:wrap; gap:8px}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; background:var(--card); border-radius:999px; border:1px solid color-mix(in lab, var(--muted), transparent 70%)}
 
-    /* Smooth accordion transition */
-    .accordion-content { 
-      max-height: 0; 
-      overflow: hidden; 
-      transition: max-height .45s ease; 
-    }
-    .accordion-content.open { 
-      max-height: 600px; /* Adjust if content is taller */
-    }
+    .card{background:var(--card); border:1px solid color-mix(in lab, var(--muted), transparent 65%); border-radius: var(--radius); box-shadow: var(--shadow); padding:18px}
+    .card h3{margin:0 0 4px 0}
 
-    /* Reduce motion preference for accessibility */
-    @media (prefers-reduced-motion: reduce) { 
-      * { 
-        transition: none !important; 
-        animation: none !important; 
-      } 
+    .section-title{display:flex; align-items:end; justify-content:space-between; gap:10px; margin: 26px 0 10px 0}
+    .section-title h2{margin:0; font-size: clamp(18px, 3.6vw, 28px)}
+
+    /* Skills */
+    .skill-controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
+    .search{position:relative; flex:1 1 280px}
+    .search input{width:100%; padding:12px 14px 12px 38px; border-radius:12px; border:1px solid color-mix(in lab, var(--muted), transparent 65%); background:var(--card); color:var(--text)}
+    .search svg{position:absolute; left:10px; top:50%; transform:translateY(-50%); opacity:.6}
+    .skills{display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px}
+    .skill{padding:10px 12px; border-radius:12px; border:1px dashed color-mix(in lab, var(--muted), transparent 55%); background:linear-gradient(180deg, color-mix(in lab, var(--card), transparent 0%), color-mix(in lab, var(--card), transparent 15%)); cursor:pointer}
+    .skill[aria-pressed="true"]{outline:2px solid var(--accent); background:color-mix(in lab, var(--card), var(--accent) 15%)}
+
+    /* Timeline */
+    .timeline{position:relative;}
+    .timeline::before{content:""; position:absolute; inset:0 0 0 12px; width:2px; background:linear-gradient(var(--accent), var(--accent-2)); border-radius:2px}
+    .event{position:relative; padding-left:34px; margin:16px 0}
+    .event::marker{content:""}
+    .event .dot{position:absolute; left:4px; top:14px; width:16px; height:16px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 0 4px color-mix(in lab, var(--accent), transparent 75%)}
+    .event .when{font-size:.95rem; color:var(--muted)}
+
+    /* Lists */
+    ul.clean{list-style:none; padding-left:0; margin:8px 0}
+    ul.clean li{padding-left:22px; position:relative; margin:10px 0}
+    ul.clean li::before{content:"▹"; position:absolute; left:0; color:var(--accent)}
+
+    /* Contact */
+    .contact-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px}
+    .contact-item{display:flex; align-items:center; justify-content:space-between; gap:10px}
+    .copy{cursor:pointer; padding:8px 12px; border-radius:10px; border:1px solid color-mix(in lab, var(--muted), transparent 65%)}
+
+    /* Footer */
+    footer{margin-top:30px; padding:30px 0; color:var(--muted); border-top:1px solid color-mix(in lab, var(--muted), transparent 70%)}
+
+    /* Utilities */
+    .reveal{opacity:0; transform: translateY(8px); transition: all .5s ease}
+    .reveal.show{opacity:1; transform:none}
+    .tag{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:color-mix(in lab, var(--card), var(--accent) 12%); border:1px solid color-mix(in lab, var(--accent), transparent 65%)}
+
+    /* Floating to top */
+    #toTop{ position: fixed; bottom: 20px; right: 16px; z-index: 60; opacity:0; transform: translateY(8px); transition: all .3s ease}
+    #toTop.show{opacity:1; transform:none}
+
+    /* Print styles */
+    @media print{
+      header.site, #toTop, .btn.print, .btn.theme{display:none !important}
+      body{background:#fff; color:#000}
+      .card, .skill, .chip{box-shadow:none; border-color:#ddd}
     }
   </style>
-  <script>
-    // Configure Tailwind CSS to use the 'class' strategy for dark mode.
-    // This allows us to toggle dark mode by adding/removing a 'dark' class on the <html> element.
-    tailwind.config = { darkMode: 'class' };
-  </script>
 </head>
-<body class="bg-grid text-slate-800 dark:text-slate-100 antialiased selection:bg-sky-500/30 selection:text-white transition-colors duration-300">
-  
-  <!-- Decorative top glow effect -->
-  <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 -top-24 h-48 bg-gradient-to-b from-sky-400/10 to-transparent"></div>
-
-  <header class="sticky top-0 z-50 backdrop-blur-xl bg-white/50 dark:bg-transparent">
-    <nav class="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
-      <a href="#" class="text-lg md:text-xl font-semibold text-slate-800 dark:text-slate-200 hover:text-black dark:hover:text-white transition-colors">Md Arham</a>
-      <div class="hidden md:flex items-center gap-8 text-sm">
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#summary">Summary</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#skills">Skills</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#experience">Experience</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#education">Education</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#contact">Contact</a>
+<body>
+  <header class="site">
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">MA</div>
+        <span>Md Arham</span>
       </div>
-      <div class="flex items-center gap-3">
-        <!-- Dark mode toggle button -->
-        <button id="theme-toggle" class="focus-ring glass rounded-xl p-2 text-slate-600 dark:text-slate-200 hover:text-black dark:hover:text-white transition" aria-label="Toggle dark mode">
-          <svg id="icon-sun" class="h-5 w-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          <svg id="icon-moon" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
-        <!-- Mobile menu button -->
-        <button id="menu-btn" class="md:hidden glass rounded-xl p-2 text-slate-600 dark:text-slate-200" aria-label="Open menu">☰</button>
-      </div>
-    </nav>
-    <!-- Mobile menu panel -->
-    <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
-      <div class="glass rounded-2xl p-4 grid gap-2 text-sm">
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#summary">Summary</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#skills">Skills</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#experience">Experience</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#education">Education</a>
-        <a class="text-slate-600 dark:text-slate-300 hover:text-black dark:hover:text-white" href="#contact">Contact</a>
+      <nav aria-label="Primary">
+        <a class="link" href="#about">About</a>
+        <a class="link" href="#skills">Skills</a>
+        <a class="link" href="#experience">Experience</a>
+        <a class="link" href="#education">Education</a>
+        <a class="link" href="#publications">Publications</a>
+        <a class="link" href="#contact">Contact</a>
+      </nav>
+      <div class="actions">
+        <button class="btn secondary theme" id="themeToggle" aria-pressed="false" title="Toggle theme">🌗 Theme</button>
+        <button class="btn print" id="printBtn" title="Print / Save as PDF">🖨️ Print</button>
       </div>
     </div>
   </header>
 
-  <main class="mx-auto max-w-7xl px-6 py-16">
-    <!-- HERO / SUMMARY SECTION -->
-    <section id="summary" class="min-h-[70vh] grid items-center">
-      <div class="grid lg:grid-cols-2 gap-10">
-        <div>
-          <p class="text-sm tracking-widest text-sky-500 dark:text-sky-300/80">AVAILABLE FOR WORK</p>
-          <h1 class="mt-3 text-4xl md:text-6xl font-bold leading-tight">
-            Software Developer with a <span class="gradient-text">builder mindset</span>
-          </h1>
-          <p class="mt-5 text-slate-600 dark:text-slate-300 max-w-2xl text-lg">
-            I craft fast, accessible web apps and love shipping features powered by AI & LLMs. Pragmatic, product-focused, and a sucker for clean DX.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="#contact" class="glass focus-ring inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium text-slate-900 dark:text-white hover:bg-black/5 dark:hover:bg-white/10 transition">
-              <span>Get in touch</span>
-            </a>
-            <a href="#skills" class="inline-flex items-center gap-2 rounded-2xl px-5 py-3 font-medium text-slate-700 dark:text-slate-200 ring-1 ring-black/10 dark:ring-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Explore skills →</a>
+  <main class="container">
+    <!-- HERO -->
+    <section id="hero" class="hero reveal">
+      <h1>Md Arham</h1>
+      <div class="subtitle">Software & Web Developer • AI & LLMs Enthusiast</div>
+      <div class="chips">
+        <span class="chip">📍 Bengaluru, Karnataka</span>
+        <a class="chip" href="mailto:tabbuanwar39@gmail.com">✉️ tabbuanwar39@gmail.com</a>
+        <button class="chip copy" data-copy="+918757314163" title="Copy phone">☎️ +91 8757314163</button>
+        <a class="chip" href="https://linkedin.com/in/xalty" target="_blank" rel="noreferrer noopener">🔗 LinkedIn</a>
+        <a class="chip" href="https://github.com/toyfriendo" target="_blank" rel="noreferrer noopener">🌐 GitHub</a>
+        <button id="vcfBtn" class="chip" title="Download vCard">📥 vCard</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="reveal">
+      <div class="section-title">
+        <h2>About</h2>
+        <div class="tag">Open to internships & projects</div>
+      </div>
+      <div class="card">
+        <p>
+          Workaholic and highly enthusiastic software developer focused on computer software and website development. Skilled in modern programming languages and frameworks, with solid knowledge in Artificial Intelligence and Large Language Models (LLMs). Passionate about continuous learning, creative problem‑solving, and delivering impactful solutions. Outside of core development, I enjoy video editing and content creation.
+        </p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="reveal">
+      <div class="section-title">
+        <h2>Core Skills</h2>
+        <div class="skill-controls">
+          <div class="search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="2"/></svg>
+            <input id="skillSearch" type="search" placeholder="Search skills (press / to focus)" aria-label="Search skills" />
           </div>
+          <button class="btn secondary" id="clearFilters">Clear</button>
         </div>
-        <div class="relative">
-          <div class="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-sky-400/20 via-fuchsia-400/10 to-emerald-300/10 blur-2xl"></div>
-          <div class="glass relative rounded-3xl p-6">
-            <canvas id="skillsChart" class="aspect-[4/3]"></canvas>
+      </div>
+      <div id="skillsGrid" class="skills" role="list"></div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="reveal">
+      <div class="section-title"><h2>Experience</h2></div>
+      <ol id="timeline" class="timeline" aria-label="Experience timeline"></ol>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="reveal">
+      <div class="section-title"><h2>Education</h2></div>
+      <div class="card">
+        <h3>B.E. Computer Science (Data Science)</h3>
+        <div class="when">Acharya Institute of Technology, Bengaluru • Dec 2022 – Sep 2026</div>
+      </div>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="reveal">
+      <div class="section-title"><h2>Publications</h2></div>
+      <div class="card">
+        <h3>Literature Survey on Artificial Intelligence</h3>
+        <div class="when">2023 • Academic overview of AI methodologies and trends</div>
+      </div>
+    </section>
+
+    <!-- LANGUAGES -->
+    <section id="languages" class="reveal">
+      <div class="section-title"><h2>Languages</h2></div>
+      <div class="chips">
+        <span class="chip">English — Fluent</span>
+        <span class="chip">Hindi — Fluent</span>
+        <span class="chip">Urdu — Fluent</span>
+      </div>
+    </section>
+
+    <!-- HOBBIES -->
+    <section id="hobbies" class="reveal">
+      <div class="section-title"><h2>Hobbies & Interests</h2></div>
+      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));">
+        <div class="card"><strong>🎬 Video Editing</strong><p>Crafting engaging content with crisp cuts and motion.</p></div>
+        <div class="card"><strong>📹 Content Creation</strong><p>Blending storytelling with technology.</p></div>
+        <div class="card"><strong>🤖 Exploring AI Applications</strong><p>Experimenting with LLMs & applied AI.</p></div>
+        <div class="card"><strong>🖥️ Web Apps & Design</strong><p>Modern, responsive UIs with accessibility in mind.</p></div>
+        <div class="card"><strong>✍️ Blogging</strong><p>Writing about dev learnings and projects.</p></div>
+        <div class="card"><strong>🎮 Esports & Game Testing</strong><p>Competitive play and QA mindset.</p></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="reveal">
+      <div class="section-title"><h2>Contact</h2></div>
+      <div class="contact-grid">
+        <div class="card contact-item">
+          <div>
+            <div><strong>Email</strong></div>
+            <div class="when">tabbuanwar39@gmail.com</div>
           </div>
+          <button class="copy" data-copy="tabbuanwar39@gmail.com">Copy</button>
+        </div>
+        <div class="card contact-item">
+          <div>
+            <div><strong>Phone</strong></div>
+            <div class="when">+91 8757314163</div>
+          </div>
+          <button class="copy" data-copy="+918757314163">Copy</button>
+        </div>
+        <div class="card contact-item">
+          <div>
+            <div><strong>LinkedIn</strong></div>
+            <div class="when">linkedin.com/in/xalty</div>
+          </div>
+          <a class="copy" href="https://linkedin.com/in/xalty" target="_blank" rel="noreferrer noopener">Open</a>
+        </div>
+        <div class="card contact-item">
+          <div>
+            <div><strong>GitHub</strong></div>
+            <div class="when">github.com/toyfriendo</div>
+          </div>
+          <a class="copy" href="https://github.com/toyfriendo" target="_blank" rel="noreferrer noopener">Open</a>
         </div>
       </div>
     </section>
 
-    <!-- SKILLS FILTER SECTION -->
-    <section class="py-16" id="skills">
-      <div class="mx-auto max-w-3xl text-center">
-        <h2 class="text-3xl md:text-4xl font-semibold">Core Competencies</h2>
-        <p class="mt-3 text-slate-500 dark:text-slate-400">Filter the chart to focus on what you care about.</p>
-        <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <button class="skill-filter-btn focus-ring glass rounded-2xl px-4 py-2 text-sm font-medium text-slate-900 dark:text-white data-[active=true]:bg-sky-500/20 dark:data-[active=true]:bg-sky-500/30" data-filter="all" data-active="true">All</button>
-          <button class="skill-filter-btn focus-ring glass rounded-2xl px-4 py-2 text-sm font-medium text-slate-900 dark:text-white data-[active=true]:bg-sky-500/20 dark:data-[active=true]:bg-sky-500/30" data-filter="technical">Technical</button>
-          <button class="skill-filter-btn focus-ring glass rounded-2xl px-4 py-2 text-sm font-medium text-slate-900 dark:text-white data-[active=true]:bg-sky-500/20 dark:data-[active=true]:bg-sky-500/30" data-filter="creative">Creative</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- EXPERIENCE SECTION -->
-    <section class="py-16" id="experience">
-      <h2 class="text-center text-3xl md:text-4xl font-semibold">Professional Experience</h2>
-      <div class="mt-10 mx-auto max-w-3xl space-y-6">
-        <article class="glass rounded-2xl p-6">
-          <button class="accordion-header w-full text-left">
-            <p class="text-xs text-slate-500 dark:text-slate-400">2021 – 2022</p>
-            <h3 class="mt-1 text-xl font-semibold">Freelance Developer</h3>
-            <p class="text-slate-600 dark:text-slate-300">Self‑Employed · Kolkata</p>
-          </button>
-          <div class="accordion-content mt-4 text-slate-600 dark:text-slate-300 space-y-2">
-            <p>• Built responsive, full‑stack sites with a focus on performance and UX.</p>
-            <p>• Scoped requirements with clients and shipped iterative features.</p>
-            <p>• Produced video assets to boost engagement.</p>
-          </div>
-        </article>
-        <article class="glass rounded-2xl p-6">
-          <button class="accordion-header w-full text-left">
-            <p class="text-xs text-slate-500 dark:text-slate-400">2020 – 2021</p>
-            <h3 class="mt-1 text-xl font-semibold">Web Developer</h3>
-            <p class="text-slate-600 dark:text-slate-300">Self‑Employed · New Delhi</p>
-          </button>
-          <div class="accordion-content mt-4 text-slate-600 dark:text-slate-300 space-y-2">
-            <p>• Built and maintained a personal website, optimizing for speed.</p>
-            <p>• Managed WordPress + cPanel hosting and admin.</p>
-            <p>• Leveraged video editing and creative content to drive interaction.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- EDUCATION SECTION -->
-    <section class="py-16" id="education">
-      <h2 class="text-center text-3xl md:text-4xl font-semibold">Education & Publications</h2>
-      <div class="mt-10 grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        <div class="glass rounded-2xl p-6">
-          <h3 class="text-lg font-semibold">B.E., Computer Science (Data Science)</h3>
-          <p class="text-slate-600 dark:text-slate-300 mt-1">Acharya Institute of Technology, Bengaluru</p>
-          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Expected Graduation: September 2026</p>
-        </div>
-        <div class="glass rounded-2xl p-6">
-          <h3 class="text-lg font-semibold">Literature Survey on Artificial Intelligence</h3>
-          <p class="text-slate-600 dark:text-slate-300 mt-1">Published 2023</p>
-          <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">Co‑authored a review of AI methodologies as a first‑year student.</p>
-        </div>
-      </div>
-    </section>
+    <footer class="container">
+      <div>© <span id="yr"></span> Md Arham • Last updated <span id="lastUpdated"></span></div>
+    </footer>
   </main>
 
-  <footer id="contact" class="border-t border-black/10 dark:border-white/10">
-    <div class="mx-auto max-w-7xl px-6 py-12 text-center">
-      <h2 class="text-3xl font-semibold">Let's Connect</h2>
-      <p class="mt-3 text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">Open to opportunities and collaborations. Drop a line, say hi, or send cat gifs—professionally, of course.</p>
-      <div class="mt-6">
-        <a href="mailto:tabbuanwar39@gmail.com" class="focus-ring inline-flex text-sky-600 dark:text-sky-300 hover:text-sky-500 dark:hover:text-sky-200">tabbuanwar39@gmail.com</a>
-      </div>
-      <div class="mt-6 flex items-center justify-center gap-6 text-slate-500 dark:text-slate-300">
-        <a href="https://linkedin.com/in/xalty" target="_blank" class="hover:text-black dark:hover:text-white" aria-label="LinkedIn">
-          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M19 0H5a5 5 0 0 0-5 5v14a5 5 0 0 0 5 5h14a5 5 0 0 0 5-5V5a5 5 0 0 0-5-5zM8 19H5V8h3v11zm-1.5-12.268A1.764 1.764 0 1 1 8.25 4.968 1.764 1.764 0 0 1 6.5 6.732zM20 19h-3v-5.604c0-3.368-4-3.113-4 0V19h-3V8h3v1.765c1.396-2.586 7-2.777 7 2.476V19z" clip-rule="evenodd"/></svg>
-        </a>
-        <a href="https://github.com/toyfriendo" target="_blank" class="hover:text-black dark:hover:text-white" aria-label="GitHub">
-          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
-        </a>
-      </div>
-      <p class="text-slate-500 dark:text-slate-500 text-xs mt-8">© 2025 Md Arham. All rights reserved.</p>
-    </div>
-  </footer>
+  <button id="toTop" class="btn" aria-label="Back to top">↑ Top</button>
 
   <script>
-    // --- CACHED ELEMENTS ---
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    const iconSun = document.getElementById('icon-sun');
-    const iconMoon = document.getElementById('icon-moon');
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-
-    // --- THEME (DARK/LIGHT) ---
-    const storageKey = 'theme-preference';
-
-    /**
-     * Checks the user's system preference for dark mode.
-     * @returns {boolean} True if the user prefers dark mode.
-     */
-    const getSystemPrefersDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-    /**
-     * Retrieves the saved theme preference from localStorage.
-     * @returns {string|null} 'dark', 'light', or null if not set.
-     */
-    const getStoredTheme = () => localStorage.getItem(storageKey);
-
-    /**
-     * Sets the theme appearance on the page (classes, icons, meta tag) without updating the chart.
-     * This is used for the initial page load to prevent race conditions.
-     * @param {string} [theme] - The theme to apply ('dark' or 'light').
-     */
-    const setThemeAppearance = (theme) => {
-        const isDark = theme === 'dark' || (!theme && getSystemPrefersDark());
-        document.documentElement.classList.toggle('dark', isDark);
-        iconMoon?.classList.toggle('hidden', isDark);
-        iconSun?.classList.toggle('hidden', !isDark);
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', isDark ? '#0b1220' : '#ffffff');
-    };
-
-    /**
-     * Toggles the theme between light and dark, saves the preference, and updates the chart.
-     */
-    const toggleTheme = () => {
-      const currentTheme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
-      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-      localStorage.setItem(storageKey, newTheme);
-      setThemeAppearance(newTheme);
-      updateChartTheme(); // Safe to call now, as the chart is guaranteed to exist.
-    };
-
-    // --- MOBILE MENU ---
-    /**
-     * Sets up the event listeners for the mobile navigation menu toggle and its links.
-     */
-    function setupMenu() {
-      menuBtn?.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-      mobileMenu?.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => mobileMenu.classList.add('hidden'));
-      });
-    }
-
-    // --- ACCORDIONS ---
-    /**
-     * Sets up the accordion functionality for the experience section.
-     */
-    function setupAccordions() {
-      document.querySelectorAll('.accordion-header').forEach(header => {
-        header.addEventListener('click', () => {
-          const content = header.nextElementSibling;
-          const isAlreadyOpen = content.classList.contains('open');
-          document.querySelectorAll('.accordion-content.open').forEach(openContent => {
-            openContent.classList.remove('open');
-          });
-          if (!isAlreadyOpen) {
-            content.classList.add('open');
-          }
-        });
-      });
-    }
-
-    // --- SKILLS CHART ---
-    const skillsData = {
-      all: {
-        labels: ['Python', 'Java', 'JavaScript', 'React.js', 'Docker', 'Content Writing', 'Video Editing', 'HTML/CSS'],
-        datasets: [{ label: 'Proficiency', data: [8, 7, 9, 8, 6, 9, 8, 9] }]
+  // ——— Data (sourced from resume) ———
+  const DATA = {
+    skills: [
+      "Python","Java","HTML","JavaScript","CSS","React.js","Docker",
+      "Content Writing","Video Editing","Blogging","Software Development",
+      "Web Development","AI","LLMs","cPanel","WordPress"
+    ],
+    experience: [
+      {
+        role: "Freelance Developer",
+        org: "Self-Employed, Kolkata",
+        start: "2021",
+        end: "2022",
+        highlights: [
+          "Designed and developed websites for clients with user-friendly UIs and efficient back‑end solutions.",
+          "Collaborated with clients to implement features and resolve issues quickly.",
+          "Edited videos and produced multimedia content to complement client projects."
+        ],
+        tags: ["Web Development","JavaScript","HTML","CSS","Client Work","Video Editing"]
       },
-      technical: {
-        labels: ['Python', 'Java', 'JavaScript', 'React.js', 'Docker', 'HTML/CSS'],
-        datasets: [{ label: 'Proficiency', data: [8, 7, 9, 8, 6, 9] }]
-      },
-      creative: {
-        labels: ['Content Writing', 'Video Editing', 'Blogging', 'Web Design'],
-        datasets: [{ label: 'Proficiency', data: [9, 8, 8, 9] }]
+      {
+        role: "Web Developer (Self‑Employed)",
+        org: "New Delhi",
+        start: "2020",
+        end: "2021",
+        highlights: [
+          "Built and maintained a personal website with responsive design.",
+          "Hands‑on experience with cPanel for WordPress site management.",
+          "Experimented with creative content and video editing to enhance engagement."
+        ],
+        tags: ["WordPress","cPanel","Responsive Design","Content Creation"]
       }
-    };
+    ]
+  };
 
-    /**
-     * Generates color values for the chart based on the current theme.
-     * @returns {{grid: string, text: string, fill: string, stroke: string}}
-     */
-    function chartColors() {
-      const isDark = document.documentElement.classList.contains('dark');
-      const base = isDark ? '255,255,255' : '15,23,42';
-      return {
-        grid: `rgba(${base},0.12)`,
-        text: `rgba(${base},0.85)`,
-        fill: isDark ? 'rgba(56,189,248,0.18)' : 'rgba(37,99,235,0.12)',
-        stroke: isDark ? 'rgba(125,211,252,1)' : 'rgba(59,130,246,1)'
-      };
-    }
-
-    /**
-     * Creates and renders the Chart.js radar chart.
-     * @param {string} [filter='all']
-     */
-    function makeChart(filter = 'all') {
-      const ctx = document.getElementById('skillsChart')?.getContext('2d');
-      if (!ctx) return;
-      
-      const colors = chartColors();
-      const data = JSON.parse(JSON.stringify(skillsData[filter]));
-
-      data.datasets[0] = { 
-        ...data.datasets[0], 
-        backgroundColor: colors.fill, 
-        borderColor: colors.stroke, 
-        borderWidth: 2, 
-        pointBackgroundColor: colors.stroke 
-      };
-
-      const options = {
-        maintainAspectRatio: true,
-        scales: { r: {
-          angleLines: { color: colors.grid },
-          grid: { color: colors.grid },
-          pointLabels: { color: colors.text, font: { size: 12 } },
-          suggestedMin: 0, suggestedMax: 10,
-          ticks: { display: false, backdropColor: 'transparent', stepSize: 2 }
-        }},
-        plugins: { legend: { display: false } }
-      };
-      window.skillsChart = new Chart(ctx, { type: 'radar', data, options });
-    }
-
-    /**
-     * Updates the colors of the existing chart instance when the theme changes.
-     */
-    function updateChartTheme() {
-      if (!window.skillsChart || !window.skillsChart.data) return;
-      const colors = chartColors();
-      const chart = window.skillsChart;
-      chart.data.datasets[0].backgroundColor = colors.fill;
-      chart.data.datasets[0].borderColor = colors.stroke;
-      chart.data.datasets[0].pointBackgroundColor = colors.stroke;
-      chart.options.scales.r.angleLines.color = colors.grid;
-      chart.options.scales.r.grid.color = colors.grid;
-      chart.options.scales.r.pointLabels.color = colors.text;
-      chart.update();
-    }
-
-    /**
-     * Sets up the event listeners for the skill filter buttons.
-     */
-    function setupFilters() {
-      const buttons = document.querySelectorAll('.skill-filter-btn');
-      buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          buttons.forEach(b => b.dataset.active = 'false');
-          btn.dataset.active = 'true';
-          const filter = btn.dataset.filter;
-          window.skillsChart.destroy();
-          makeChart(filter);
-        });
-      });
-    }
-
-    // --- INITIALIZATION ---
-    document.addEventListener('DOMContentLoaded', () => {
-      // 1. Set the initial theme appearance.
-      setThemeAppearance(getStoredTheme());
-      
-      // 2. Now that theme is set, create the chart.
-      makeChart('all');
-
-      // 3. Set up all event listeners.
-      themeToggleBtn?.addEventListener('click', toggleTheme);
-      setupMenu();
-      setupAccordions();
-      setupFilters();
+  // ——— Utilities ———
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  const el = (tag, attrs={}, children=[]) => {
+    const n = document.createElement(tag);
+    Object.entries(attrs).forEach(([k,v]) => {
+      if(k === 'class') n.className = v; else if(k.startsWith('on')) n.addEventListener(k.slice(2), v); else if(k==='html') n.innerHTML = v; else n.setAttribute(k,v);
     });
+    children.forEach(ch => n.append(ch));
+    return n;
+  }
+
+  // ——— Theme ———
+  const themeToggle = $('#themeToggle');
+  const setTheme = (t) => {
+    document.documentElement.setAttribute('data-theme', t);
+    localStorage.setItem('theme', t);
+    themeToggle.setAttribute('aria-pressed', t === 'light');
+  };
+  setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  themeToggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
+
+  // ——— Print ———
+  $('#printBtn').addEventListener('click', () => window.print());
+
+  // ——— Back to top ———
+  const toTop = $('#toTop');
+  toTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  window.addEventListener('scroll', () => {
+    const show = window.scrollY > 500;
+    toTop.classList.toggle('show', show);
+  });
+
+  // ——— Nav active on scroll (scrollspy) ———
+  const navLinks = $$('.nav a.link');
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const id = '#' + e.target.id;
+      const link = navLinks.find(a => a.getAttribute('href') === id);
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.removeAttribute('aria-current'));
+        link && link.setAttribute('aria-current','page');
+      }
+    });
+  }, { rootMargin: '-50% 0px -45% 0px', threshold: .01 });
+  sections.forEach(s => s && spy.observe(s));
+
+  // ——— Reveal on view ———
+  const rev = new IntersectionObserver(entries => entries.forEach(e => e.target.classList.toggle('show', e.isIntersecting)), {threshold:.08});
+  $$('.reveal').forEach(n => rev.observe(n));
+
+  // ——— Skills render + filter ———
+  const skillsGrid = $('#skillsGrid');
+  const skillSearch = $('#skillSearch');
+  const clearFilters = $('#clearFilters');
+  let activeSkills = new Set();
+
+  function renderSkills(filter = ''){
+    skillsGrid.innerHTML = '';
+    const list = DATA.skills
+      .filter(s => s.toLowerCase().includes(filter.toLowerCase()))
+      .sort((a,b) => a.localeCompare(b));
+    list.forEach(skill => {
+      const btn = el('button', {class:'skill', role:'listitem', 'aria-pressed': activeSkills.has(skill) ? 'true' : 'false'});
+      btn.textContent = skill;
+      btn.addEventListener('click', () => {
+        if(activeSkills.has(skill)) activeSkills.delete(skill); else activeSkills.add(skill);
+        btn.setAttribute('aria-pressed', activeSkills.has(skill));
+        renderTimeline();
+      });
+      skillsGrid.append(btn);
+    });
+  }
+  renderSkills();
+  skillSearch.addEventListener('input', e => renderSkills(e.target.value));
+  window.addEventListener('keydown', e => { if(e.key === '/') { e.preventDefault(); skillSearch.focus(); }});
+  clearFilters.addEventListener('click', () => { activeSkills = new Set(); renderSkills(skillSearch.value); renderTimeline(); });
+
+  // ——— Timeline render (filters by activeSkills) ———
+  const timeline = $('#timeline');
+  function renderTimeline(){
+    timeline.innerHTML = '';
+    const items = DATA.experience.filter(evt => 
+      activeSkills.size === 0 || evt.tags.some(t => activeSkills.has(t) || activeSkills.has(t.split(' ')[0]))
+    );
+    items.forEach(evt => {
+      const li = el('li', {class:'event card'});
+      li.append(el('div', {class:'dot'}));
+      li.append(el('h3', {html: `${evt.role} — <span style="font-weight:600; opacity:.9">${evt.org}</span>`}));
+      li.append(el('div', {class:'when', html: `${evt.start} – ${evt.end}`}));
+      const list = el('ul', {class:'clean'});
+      evt.highlights.forEach(h => list.append(el('li', {html: h})));
+      const tagrow = el('div', {class:'chips'});
+      evt.tags.forEach(t => tagrow.append(el('span', {class:'tag', html: t})));
+      li.append(list, tagrow);
+      timeline.append(li);
+    });
+  }
+  renderTimeline();
+
+  // ——— Copy to clipboard ———
+  function toast(node, text){
+    const t = el('span', {class:'chip', html: text});
+    t.style.position = 'fixed'; t.style.bottom = '20px'; t.style.left = '50%'; t.style.transform = 'translateX(-50%)';
+    t.style.zIndex = 100; document.body.append(t); setTimeout(()=> t.remove(), 1400);
+  }
+  $$('.copy').forEach(btn => btn.addEventListener('click', async () => {
+    const value = btn.getAttribute('data-copy');
+    try{ await navigator.clipboard.writeText(value); toast(btn, 'Copied!'); } catch{ toast(btn, 'Select & copy'); }
+  }));
+
+  // ——— vCard download ———
+  $('#vcfBtn').addEventListener('click', () => {
+    const v = `BEGIN:VCARD\nVERSION:3.0\nFN:Md Arham\nTEL;TYPE=CELL:+918757314163\nEMAIL:tabbuanwar39@gmail.com\nADR;TYPE=HOME:;;Bengaluru;Karnataka;India\nURL:https://linkedin.com/in/xalty\nURL:https://github.com/toyfriendo\nEND:VCARD`;
+    const blob = new Blob([v], {type:'text/vcard'});
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'Md_Arham.vcf'; a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  // ——— Footer dates ———
+  $('#yr').textContent = new Date().getFullYear();
+  const d = new Date(document.lastModified);
+  $('#lastUpdated').textContent = d.toLocaleString(undefined, {year:'numeric', month:'short', day:'2-digit'});
+
   </script>
 </body>
 </html>
