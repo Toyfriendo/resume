@@ -3,113 +3,212 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Md Arham — Interactive Resume</title>
+  <title>Md Arham — Holo/Resume v2.0</title>
   <meta name="description" content="Interactive resume of Md Arham — Software & Web Developer with AI/LLM interest." />
   <meta name="color-scheme" content="light dark" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg: #0b0c10;
-      --card: #111318;
-      --text: #e7e9ee;
-      --muted: #a6adbb;
-      --accent: #6ee7b7; /* mint */
-      --accent-2: #60a5fa; /* blue */
-      --ring: rgba(110,231,183,.45);
-      --shadow: 0 10px 30px rgba(0,0,0,.25);
-      --radius: 16px;
+      --bg: #010409;
+      --card: #0d1117;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --accent: #00f5ff; /* neon cyan */
+      --accent-2: #0077ff; /* neon blue */
+      --ring: rgba(0, 245, 255, .45);
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 12px;
       --maxw: 1080px;
+      --border-color: rgba(0, 119, 255, 0.2);
     }
     [data-theme="light"]{
-      --bg: #f7fafc;
+      --bg: #f0f4f8;
       --card:#ffffff;
       --text:#0b1220;
       --muted:#5b6471;
-      --accent:#0ea5e9; /* cyan */
-      --accent-2:#10b981; /* green */
-      --ring: rgba(14,165,233,.35);
+      --accent:#0077ff;
+      --accent-2:#0ea5e9;
+      --ring: rgba(0, 119, 255, .35);
       --shadow: 0 10px 30px rgba(2,8,23,.08);
+      --border-color: rgba(0, 119, 255, 0.3);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      font-family: 'Exo 2', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
       color:var(--text);
-      background: radial-gradient(1200px 800px at 80% -10%, rgba(96,165,250,.12), transparent 60%),
-                  radial-gradient(900px 600px at -10% 30%, rgba(110,231,183,.10), transparent 60%),
-                  var(--bg);
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 1% 1%, var(--accent-2), transparent 25%),
+        radial-gradient(circle at 99% 99%, var(--accent), transparent 25%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03), transparent 30%);
       line-height:1.6;
-      letter-spacing:.2px;
+      letter-spacing:.3px;
+      cursor: none;
     }
-    a{color:inherit;text-decoration:none}
+    h1, h2, h3, .brand {
+        font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Interactive Mouse Follower */
+    #cursor-orb {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+      transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+      backdrop-filter: blur(1px);
+    }
+    #cursor-orb::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background-color: var(--accent);
+      opacity: 0.2;
+      box-shadow: 0 0 15px var(--accent), 0 0 25px var(--accent);
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse { 0%, 100% { transform: scale(0.9); opacity: 0.2; } 50% { transform: scale(1.1); opacity: 0.4; } }
+
+    /* Apply hover effect via JS by adding class to orb */
+    #cursor-orb.hover {
+      width: 50px;
+      height: 50px;
+      background-color: rgba(0, 245, 255, 0.1);
+    }
+    a, button, .copy, .skill { cursor: none; }
+
+    a{color:var(--accent); text-decoration:none; text-shadow: 0 0 5px rgba(0, 245, 255, 0.5);}
     .container{width:min(100%, var(--maxw)); margin-inline:auto; padding-inline: clamp(16px, 3vw, 28px)}
 
     /* Header */
     header.site{
-      position:sticky; top:0; z-index:50; backdrop-filter: blur(8px);
-      background: color-mix(in lab, var(--bg) 70%, transparent);
-      border-bottom: 1px solid color-mix(in lab, var(--muted), transparent 70%);
+      position:sticky; top:0; z-index:50; backdrop-filter: blur(12px);
+      background: rgba(13, 17, 23, 0.7);
+      border-bottom: 1px solid var(--border-color);
     }
     .nav{display:flex; align-items:center; justify-content:space-between; gap:12px; height:64px}
-    .brand{display:flex; align-items:center; gap:10px; font-weight:800}
-    .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001b1b;box-shadow:var(--shadow)}
-    .nav a.link{padding:8px 12px;border-radius:10px;opacity:.9}
-    .nav a.link[aria-current="page"], .nav a.link:hover{background:color-mix(in oklab, var(--card) 60%, transparent 40%); outline:1px solid color-mix(in lab, var(--muted), transparent 65%)}
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; font-size: 1.2rem; letter-spacing: 1px;}
+    .brand .logo{width:36px;height:36px;display:grid;place-items:center;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#010409; font-weight: 900; box-shadow:0 0 10px var(--accent); animation: rotate 10s linear infinite;}
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .nav a.link{padding:8px 12px;border-radius:8px; opacity:.9; transition: all .3s ease; border: 1px solid transparent;}
+    .nav a.link[aria-current="page"], .nav a.link:hover{
+        background: rgba(0, 245, 255, 0.1);
+        border-color: var(--border-color);
+        text-shadow: 0 0 8px var(--accent);
+    }
     .nav .actions{display:flex;gap:8px;align-items:center}
-    .btn{display:inline-flex; gap:8px; align-items:center; border:1px solid color-mix(in lab, var(--muted), transparent 65%); background:var(--card); color:var(--text); padding:10px 14px; border-radius:12px; box-shadow:var(--shadow); cursor:pointer}
+    .btn{display:inline-flex; gap:8px; align-items:center; border:1px solid var(--border-color); background:var(--card); color:var(--text); padding:10px 14px; border-radius:10px; box-shadow: var(--shadow); transition: all .3s ease; position: relative; overflow: hidden;}
+    .btn:hover {
+        border-color: var(--accent);
+        box-shadow: 0 0 15px var(--accent), inset 0 0 10px rgba(0, 245, 255, 0.1);
+        transform: translateY(-2px);
+    }
     .btn.secondary{background:transparent}
     .btn:focus-visible{outline:2px solid var(--ring)}
 
     /* Sections */
     section{scroll-margin-top:84px}
     .grid{display:grid; gap:16px}
-    .hero{display:grid; gap:18px; padding-block:28px}
-    .hero h1{font-weight:900; letter-spacing:.4px; line-height:1.1; font-size: clamp(28px, 5.2vw, 56px); margin:0}
-    .hero .subtitle{font-size: clamp(14px, 2.6vw, 18px); color:var(--muted)}
-    .chips{display:flex; flex-wrap:wrap; gap:8px}
-    .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; background:var(--card); border-radius:999px; border:1px solid color-mix(in lab, var(--muted), transparent 70%)}
+    .hero{display:grid; gap:18px; padding-block:28px; text-align: center;}
+    .hero h1{font-weight:900; letter-spacing:2px; line-height:1.1; font-size: clamp(36px, 6vw, 64px); margin:0; text-shadow: 0 0 10px var(--accent), 0 0 30px var(--accent-2);}
+    .hero .subtitle{font-size: clamp(16px, 3vw, 20px); color:var(--muted); letter-spacing: 1px;}
+    .chips{display:flex; flex-wrap:wrap; gap:10px; justify-content: center;}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; background:var(--card); border-radius:999px; border:1px solid var(--border-color); transition: all .3s ease;}
+    .chip:hover{
+        transform: translateY(-3px) scale(1.05);
+        background-color: rgba(0, 245, 255, 0.1);
+        border-color: var(--accent);
+        box-shadow: 0 0 10px var(--accent);
+    }
 
-    .card{background:var(--card); border:1px solid color-mix(in lab, var(--muted), transparent 65%); border-radius: var(--radius); box-shadow: var(--shadow); padding:18px}
-    .card h3{margin:0 0 4px 0}
+    .card{
+        background:var(--card);
+        border:1px solid var(--border-color);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding:22px;
+        transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: radial-gradient(circle at 50% 0, rgba(0, 245, 255, 0.15), transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+    .card:hover{
+        transform: translateY(-5px);
+        border-color: var(--accent);
+        box-shadow: 0 0 20px var(--ring);
+    }
+    .card:hover::before { opacity: 1; }
+    .card h3{margin:0 0 4px 0; color: var(--accent);}
 
-    .section-title{display:flex; align-items:end; justify-content:space-between; gap:10px; margin: 26px 0 10px 0}
-    .section-title h2{margin:0; font-size: clamp(18px, 3.6vw, 28px)}
+    .section-title{display:flex; align-items:center; justify-content:space-between; gap:10px; margin: 32px 0 12px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;}
+    .section-title h2{margin:0; font-size: clamp(20px, 4vw, 32px); text-shadow: 0 0 5px var(--accent-2);}
 
     /* Skills */
     .skill-controls{display:flex; flex-wrap:wrap; gap:10px; align-items:center}
     .search{position:relative; flex:1 1 280px}
-    .search input{width:100%; padding:12px 14px 12px 38px; border-radius:12px; border:1px solid color-mix(in lab, var(--muted), transparent 65%); background:var(--card); color:var(--text)}
+    .search input{width:100%; padding:12px 14px 12px 38px; border-radius:10px; border:1px solid var(--border-color); background:var(--card); color:var(--text); transition: all .3s ease;}
+    .search input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--ring); }
     .search svg{position:absolute; left:10px; top:50%; transform:translateY(-50%); opacity:.6}
     .skills{display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:10px}
-    .skill{padding:10px 12px; border-radius:12px; border:1px dashed color-mix(in lab, var(--muted), transparent 55%); background:linear-gradient(180deg, color-mix(in lab, var(--card), transparent 0%), color-mix(in lab, var(--card), transparent 15%)); cursor:pointer}
-    .skill[aria-pressed="true"]{outline:2px solid var(--accent); background:color-mix(in lab, var(--card), var(--accent) 15%)}
+    .skill{padding:10px 12px; border-radius:10px; border:1px solid var(--border-color); background: transparent; transition: all .3s ease; text-align: center;}
+    .skill:hover {
+        transform: translateY(-3px);
+        background: rgba(0, 245, 255, 0.1);
+        border-color: var(--accent);
+        box-shadow: 0 0 10px var(--ring);
+    }
+    .skill[aria-pressed="true"]{outline:2px solid var(--accent); background:color-mix(in lab, var(--card), var(--accent) 15%); box-shadow: 0 0 10px var(--ring);}
 
     /* Timeline */
-    .timeline{position:relative;}
-    .timeline::before{content:""; position:absolute; inset:0 0 0 12px; width:2px; background:linear-gradient(var(--accent), var(--accent-2)); border-radius:2px}
+    .timeline{position:relative; padding-left: 20px;}
+    .timeline::before{content:""; position:absolute; inset:0 0 0 12px; width:2px; background:linear-gradient(var(--accent), var(--accent-2)); border-radius:2px; box-shadow: 0 0 8px var(--accent-2);}
     .event{position:relative; padding-left:34px; margin:16px 0}
     .event::marker{content:""}
-    .event .dot{position:absolute; left:4px; top:14px; width:16px; height:16px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 0 4px color-mix(in lab, var(--accent), transparent 75%)}
+    .event .dot{position:absolute; left:4px; top:14px; width:16px; height:16px; border-radius:999px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); box-shadow:0 0 10px var(--accent), 0 0 0 4px color-mix(in lab, var(--accent), transparent 75%); animation: pulse 2s infinite ease-in-out;}
     .event .when{font-size:.95rem; color:var(--muted)}
 
     /* Lists */
     ul.clean{list-style:none; padding-left:0; margin:8px 0}
     ul.clean li{padding-left:22px; position:relative; margin:10px 0}
-    ul.clean li::before{content:"▹"; position:absolute; left:0; color:var(--accent)}
+    ul.clean li::before{content:"»"; position:absolute; left:0; color:var(--accent); text-shadow: 0 0 5px var(--accent);}
 
     /* Contact */
     .contact-grid{display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px}
     .contact-item{display:flex; align-items:center; justify-content:space-between; gap:10px}
-    .copy{cursor:pointer; padding:8px 12px; border-radius:10px; border:1px solid color-mix(in lab, var(--muted), transparent 65%)}
+    .copy{cursor:none; padding:8px 12px; border-radius:10px; border:1px solid var(--border-color); transition: all .3s ease;}
+    .copy:hover { background-color: rgba(0, 245, 255, 0.1); border-color: var(--accent); }
 
     /* Footer */
-    footer{margin-top:30px; padding:30px 0; color:var(--muted); border-top:1px solid color-mix(in lab, var(--muted), transparent 70%)}
+    footer{margin-top:40px; padding:30px 0; color:var(--muted); border-top:1px solid var(--border-color); text-align: center;}
 
     /* Utilities */
-    .reveal{opacity:0; transform: translateY(8px); transition: all .5s ease}
+    .reveal{opacity:0; transform: translateY(12px); transition: all .6s ease}
     .reveal.show{opacity:1; transform:none}
-    .tag{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:color-mix(in lab, var(--card), var(--accent) 12%); border:1px solid color-mix(in lab, var(--accent), transparent 65%)}
+    .tag{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; background:rgba(0, 245, 255, 0.1); border:1px solid var(--border-color); transition: all .3s ease;}
+    .tag:hover { border-color: var(--accent); box-shadow: 0 0 8px var(--ring); }
 
     /* Floating to top */
     #toTop{ position: fixed; bottom: 20px; right: 16px; z-index: 60; opacity:0; transform: translateY(8px); transition: all .3s ease}
@@ -117,13 +216,15 @@
 
     /* Print styles */
     @media print{
-      header.site, #toTop, .btn.print, .btn.theme{display:none !important}
-      body{background:#fff; color:#000}
+      header.site, #toTop, .btn.print, .btn.theme, #cursor-orb {display:none !important}
+      body{background:#fff; color:#000; cursor: default;}
       .card, .skill, .chip{box-shadow:none; border-color:#ddd}
+      a { cursor: pointer; }
     }
   </style>
 </head>
 <body>
+  <div id="cursor-orb"></div>
   <header class="site">
     <div class="container nav">
       <div class="brand">
@@ -146,7 +247,6 @@
   </header>
 
   <main class="container">
-    <!-- HERO -->
     <section id="hero" class="hero reveal">
       <h1>Md Arham</h1>
       <div class="subtitle">Software & Web Developer • AI & LLMs Enthusiast</div>
@@ -160,7 +260,6 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="reveal">
       <div class="section-title">
         <h2>About</h2>
@@ -173,7 +272,6 @@
       </div>
     </section>
 
-    <!-- SKILLS -->
     <section id="skills" class="reveal">
       <div class="section-title">
         <h2>Core Skills</h2>
@@ -188,13 +286,11 @@
       <div id="skillsGrid" class="skills" role="list"></div>
     </section>
 
-    <!-- EXPERIENCE -->
     <section id="experience" class="reveal">
       <div class="section-title"><h2>Experience</h2></div>
       <ol id="timeline" class="timeline" aria-label="Experience timeline"></ol>
     </section>
 
-    <!-- EDUCATION -->
     <section id="education" class="reveal">
       <div class="section-title"><h2>Education</h2></div>
       <div class="card">
@@ -203,7 +299,6 @@
       </div>
     </section>
 
-    <!-- PUBLICATIONS -->
     <section id="publications" class="reveal">
       <div class="section-title"><h2>Publications</h2></div>
       <div class="card">
@@ -212,7 +307,6 @@
       </div>
     </section>
 
-    <!-- LANGUAGES -->
     <section id="languages" class="reveal">
       <div class="section-title"><h2>Languages</h2></div>
       <div class="chips">
@@ -222,7 +316,6 @@
       </div>
     </section>
 
-    <!-- HOBBIES -->
     <section id="hobbies" class="reveal">
       <div class="section-title"><h2>Hobbies & Interests</h2></div>
       <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px,1fr));">
@@ -235,7 +328,6 @@
       </div>
     </section>
 
-    <!-- CONTACT -->
     <section id="contact" class="reveal">
       <div class="section-title"><h2>Contact</h2></div>
       <div class="contact-grid">
@@ -325,6 +417,20 @@
     return n;
   }
 
+  // --- Futuristic Cursor ---
+  const cursorOrb = $('#cursor-orb');
+  const interactiveElements = $$('a, button, .copy, .skill, .chip, .link');
+  window.addEventListener('mousemove', e => {
+      requestAnimationFrame(() => {
+          cursorOrb.style.top = `${e.clientY}px`;
+          cursorOrb.style.left = `${e.clientX}px`;
+      });
+  });
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => cursorOrb.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursorOrb.classList.remove('hover'));
+  });
+
   // ——— Theme ———
   const themeToggle = $('#themeToggle');
   const setTheme = (t) => {
@@ -332,7 +438,8 @@
     localStorage.setItem('theme', t);
     themeToggle.setAttribute('aria-pressed', t === 'light');
   };
-  setTheme(localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  // Default to dark theme for the futuristic look
+  setTheme(localStorage.getItem('theme') || 'dark');
   themeToggle.addEventListener('click', () => setTheme(document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light'));
 
   // ——— Print ———
@@ -396,7 +503,7 @@
   const timeline = $('#timeline');
   function renderTimeline(){
     timeline.innerHTML = '';
-    const items = DATA.experience.filter(evt => 
+    const items = DATA.experience.filter(evt =>
       activeSkills.size === 0 || evt.tags.some(t => activeSkills.has(t) || activeSkills.has(t.split(' ')[0]))
     );
     items.forEach(evt => {
@@ -406,7 +513,7 @@
       li.append(el('div', {class:'when', html: `${evt.start} – ${evt.end}`}));
       const list = el('ul', {class:'clean'});
       evt.highlights.forEach(h => list.append(el('li', {html: h})));
-      const tagrow = el('div', {class:'chips'});
+      const tagrow = el('div', {class:'chips', style: 'justify-content: flex-start;'});
       evt.tags.forEach(t => tagrow.append(el('span', {class:'tag', html: t})));
       li.append(list, tagrow);
       timeline.append(li);
@@ -417,8 +524,16 @@
   // ——— Copy to clipboard ———
   function toast(node, text){
     const t = el('span', {class:'chip', html: text});
-    t.style.position = 'fixed'; t.style.bottom = '20px'; t.style.left = '50%'; t.style.transform = 'translateX(-50%)';
-    t.style.zIndex = 100; document.body.append(t); setTimeout(()=> t.remove(), 1400);
+    t.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      box-shadow: 0 0 15px var(--accent);
+      border-color: var(--accent);
+    `;
+    document.body.append(t); setTimeout(()=> t.remove(), 1400);
   }
   $$('.copy').forEach(btn => btn.addEventListener('click', async () => {
     const value = btn.getAttribute('data-copy');
